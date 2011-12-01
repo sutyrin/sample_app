@@ -4,3 +4,4 @@ log/*.log
 tmp/
 *.swp
 webrat.log
+db/development.sqlite3-journal
