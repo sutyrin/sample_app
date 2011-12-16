@@ -79,6 +79,12 @@ describe User do
       should_not be_valid
   end
 
+  it "should require a non-empty matching password confirmation" do
+    User.new(@attr.merge(:password_confirmation => "")).
+      should_not be_valid
+  end
+
+
   it "should reject short passwords" do
     short = "a" * 5
     hash = @attr.merge(:password => short, :password_confirmation => short)
@@ -105,6 +111,16 @@ describe User do
       @user.encrypted_password.should_not be_blank
     end
 
-  end
+    describe "has_password? method" do
 
+      it "should be true if the passwords match" do
+        @user.has_password?(@attr[:password]).should be_true
+      end    
+
+      it "should be false if the passwords don't match" do
+        @user.has_password?("surely_invalid").should be_false
+      end 
+
+    end
+  end
 end
